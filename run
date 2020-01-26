@@ -1,0 +1,21 @@
+#!/usr/bin/env php
+<?php
+
+// Uygulamaya bir dosya dahil ederken izleyeceğimiz yol.
+$GLOBALS['PATH'] = __DIR__;
+
+// Konsoldan giriş yapılıp yapılmadığı kontrol edilir.
+if(isset($_SERVER['SHELL']) && $argv[0] === 'run'){
+    // Diziden dosya adı silinir.
+    unset($argv[0]);
+    $argv = array_values($argv);
+
+    // Komutların yürütüleceği sınıf çağırılır.
+    require_once __DIR__ . '/app/provider/console.php';
+    
+    $console = new Console;
+    $result = $console->execute($argv);
+
+    // Çıktılar konsola basılır.
+    echo $result . PHP_EOL;
+}
